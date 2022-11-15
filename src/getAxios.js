@@ -25,7 +25,6 @@ function getAxios(valueInput, counter, maxOnPage) {
 async function asyncGetAxios(valueInput, counter, maxOnPage) {
     try {
         const dataCard = await getAxios(valueInput, counter, maxOnPage)
-        console.log(dataCard.data)
 
         if (!dataCard.data.hits.length) {
             throw new Error("Alarm!!!");

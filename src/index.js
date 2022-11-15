@@ -11,24 +11,21 @@ const refs = {
     formEl: document.querySelector('.search-form'),
     cardGallery: document.querySelector('.gallery'),
     btnLoadMore: document.querySelector('.load-more'),
-    // listGalaryEl: document.querySelector(".gallery")
 }
 
-let maxOnPage = 20;
+let maxOnPage = 40;
 let counter = 1;
 let valueInput;
+let gallery = new SimpleLightbox('.gallery a', { captionDelay: 250, captionsData: `alt`});
 
 refs.btnLoadMore.setAttribute('disabled', 'disabled');
-
 refs.formEl.addEventListener('submit', sendForm);
 refs.btnLoadMore.addEventListener('click', sendMore);
-
-
+refs.cardGallery.addEventListener('click', onTagsClickGallary);
 
 function sendForm(evt) {
     counter = 1;
     evt.preventDefault();
-    console.log(evt.currentTarget.elements.searchQuery.value);
     valueInput = evt.currentTarget.elements.searchQuery.value;
     asyncGetAxios(valueInput, counter, maxOnPage)
 }
@@ -42,24 +39,22 @@ function getCard(resulte) {
     refs.cardGallery.innerHTML = resulte.data.hits.map(makeCard).join('');
     refs.btnLoadMore.removeAttribute('disabled');
     Notiflix.Notify.info(`Hooray! We found ${resulte.data.totalHits} images.`);
-    if ((counter * maxOnPage) >= resulte.data.totalHits) {
-        disableBtn()
-        Notiflix.Notify.info("We're sorry, but you've reached the end of search results.");
-    }
-    counter +=1;
-    console.log(counter);
+    makeNextStep(resulte);
 }
 
 function getCardMore(resulte) {
-    console.log(resulte)
     refs.cardGallery.insertAdjacentHTML("beforeend", resulte.data.hits.map(makeCard).join(''));
     refs.btnLoadMore.removeAttribute('disabled');
+    makeNextStep(resulte)
+}
+
+function makeNextStep(resulte) {
     if ((counter * maxOnPage) >= resulte.data.totalHits) {
-        Notiflix.Notify.info("We're sorry, but you've reached the end of search results.");
         disableBtn()
+        Notiflix.Notify.info("We're sorry, but you've reached the end of search results.");
     }
-    counter += 1;
-    console.log(counter)
+    gallery.refresh();
+    counter +=1;
 }
 
 function disableBtn() {
@@ -68,14 +63,12 @@ function disableBtn() {
 
 function onTagsClickGallary(evt) {
     if (evt.target.nodeName !== 'IMG') {
-    return
+        return
     }
-    console.log('Я IMG')
     evt.preventDefault()  
 };
 
-let gallery = new SimpleLightbox('.gallery a');
-refs.cardGallery.addEventListener('click', onTagsClickGallary);
+
 
 
 
