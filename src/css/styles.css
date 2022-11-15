@@ -32,6 +32,8 @@ body {
   gap: 10px;
   flex-wrap: wrap;
   justify-content: center;
+  /* width: calc((100% - 10px * 3)/ 4);
+  margin-bottom: 20px; */
 }
 
 .photo-card {

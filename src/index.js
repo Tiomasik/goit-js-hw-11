@@ -1,5 +1,7 @@
 import './css/styles.css';
 import Notiflix from 'notiflix';
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 import makeCard from "./tamplatea/get-card.hbs";
 import { asyncGetAxios } from "./getAxios";
 
@@ -9,6 +11,7 @@ const refs = {
     formEl: document.querySelector('.search-form'),
     cardGallery: document.querySelector('.gallery'),
     btnLoadMore: document.querySelector('.load-more'),
+    // listGalaryEl: document.querySelector(".gallery")
 }
 
 let maxOnPage = 20;
@@ -19,6 +22,8 @@ refs.btnLoadMore.setAttribute('disabled', 'disabled');
 
 refs.formEl.addEventListener('submit', sendForm);
 refs.btnLoadMore.addEventListener('click', sendMore);
+
+
 
 function sendForm(evt) {
     counter = 1;
@@ -60,3 +65,17 @@ function getCardMore(resulte) {
 function disableBtn() {
     refs.btnLoadMore.setAttribute('disabled', 'disabled');
 }
+
+function onTagsClickGallary(evt) {
+    if (evt.target.nodeName !== 'IMG') {
+    return
+    }
+    console.log('Я IMG')
+    evt.preventDefault()  
+};
+
+let gallery = new SimpleLightbox('.gallery a');
+refs.cardGallery.addEventListener('click', onTagsClickGallary);
+
+
+
