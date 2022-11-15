@@ -1,6 +1,6 @@
 import Notiflix from 'notiflix';
 import axios from 'axios';
-import { getCard, getCardMore, disableBtn } from "./index";
+import { getCard, getCardMore, disableBtn, clearAll } from "./index";
 
 export { asyncGetAxios }
 
@@ -36,5 +36,6 @@ async function asyncGetAxios(valueInput, counter, maxOnPage) {
         getCardMore(dataCard)
     } catch(error) {
         Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
+        clearAll()
     }
 }

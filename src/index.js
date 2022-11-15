@@ -5,7 +5,7 @@ import "simplelightbox/dist/simple-lightbox.min.css";
 import makeCard from "./tamplatea/get-card.hbs";
 import { asyncGetAxios } from "./getAxios";
 
-export { getCard, getCardMore, disableBtn }
+export { getCard, getCardMore, disableBtn, clearAll }
 
 const refs = {
     formEl: document.querySelector('.search-form'),
@@ -67,6 +67,10 @@ function onTagsClickGallary(evt) {
     }
     evt.preventDefault()  
 };
+
+function clearAll() {
+    refs.cardGallery.innerHTML = '';
+}
 
 
 
